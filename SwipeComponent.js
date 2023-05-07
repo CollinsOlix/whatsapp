@@ -37,7 +37,7 @@ export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 4) {
 export default function ExampleComponent(props) {
   const { indexValue } = useContext(SectionContext);
   const [selectedItem, setSelectedItem] = indexValue;
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 6);
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 3);
   const navigate = useNavigation();
   function onSwipeLeft() {
     if (selectedItem == 4) return;
@@ -55,7 +55,7 @@ export default function ExampleComponent(props) {
     <ScrollView
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
-      scrollEnabled="false"
+      // scrollEnabled="false"
     >
       {props.children}
     </ScrollView>

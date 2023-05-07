@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./HomeScreen";
+import Conversation from "./Conversation";
 import { SectionContext } from "./Context";
 import { useState } from "react";
 
@@ -18,6 +19,7 @@ export default function App() {
           initialRouteName="HomeScreen"
         >
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen name="Conversation" component={Conversation} />
         </Stack.Navigator>
       </NavigationContainer>
     </SectionContext.Provider>
