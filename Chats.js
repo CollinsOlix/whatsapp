@@ -7,7 +7,7 @@ const Chats = () => {
     <View>
       <Archived />
       <View>
-        <Text>Chats</Text>
+        <Text style={{color: "white"}}>Chats</Text>
       </View>
     </View>
   );

@@ -4,7 +4,7 @@ import React from "react";
 const Groups = () => {
   return (
     <View>
-      <Text>Groups</Text>
+      <Text style={{color: "white"}}>Groups</Text>
     </View>
   );
 };
