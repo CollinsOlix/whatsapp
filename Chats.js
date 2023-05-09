@@ -19,9 +19,9 @@ const contacts = [
   },
   {
     id: "3",
-    username: "Collins Olisakwe Nigerian",
-    message: "How is your day going",
-    profileImg: require("./photos/dp.png"),
+    username: "Chinese Business Man",
+    message: "I am an honourable business man",
+    profileImg: require("./photos/profile.jpeg"),
   },
   {
     id: "4",
@@ -54,7 +54,6 @@ const contacts = [
     profileImg: require("./photos/dp.png"),
   },
 ];
-console.log(contacts[0].profileImg, "is 11");
 
 const Chats = () => {
   return (

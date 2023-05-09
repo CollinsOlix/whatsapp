@@ -5,12 +5,19 @@ import { Image } from "react-native";
 import { StyleSheet } from "react-native";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Contact = (props) => {
+  const navigate = useNavigation();
   const { profileImg, username, message } = props;
   // const dp = require(profileImg);
   return (
-    <TouchableOpacity style={styles.wrapper}>
+    <TouchableOpacity
+      style={styles.wrapper}
+      onPress={() =>
+        navigate.navigate("Conversation", { profileImg, message, username })
+      }
+    >
       <TouchableOpacity>
         <Image
           source={profileImg}
@@ -22,8 +29,14 @@ const Contact = (props) => {
           {username}
         </Text>
         <View style={styles.isRead}>
-          <FontAwesomeIcon icon={faCheck} />
-          <Text style={[styles.message, { color: "rgb(133,150,160)" }]}>
+          <FontAwesomeIcon
+            style={{ color: "rgb(133,150,160)", marginRight: 10, marginTop: 5 }}
+            icon={faCheck}
+          />
+          <Text
+            numberOfLines={1}
+            style={[styles.message, { color: "rgb(133,150,160)", width: 200 }]}
+          >
             {message}
           </Text>
         </View>

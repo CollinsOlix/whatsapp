@@ -37,7 +37,7 @@ export function useSwipe(onSwipeLeft, onSwipeRight, rangeOffset = 4) {
 export default function ExampleComponent(props) {
   const { indexValue } = useContext(SectionContext);
   const [selectedItem, setSelectedItem] = indexValue;
-  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 3);
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeLeft, onSwipeRight, 5);
   const navigate = useNavigation();
   function onSwipeLeft() {
     if (selectedItem == 4) return;

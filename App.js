@@ -4,6 +4,7 @@ import HomeScreen from "./HomeScreen";
 import Conversation from "./Conversation";
 import { SectionContext } from "./Context";
 import { useState } from "react";
+import Message from "./Message";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
         >
           <Stack.Screen name="HomeScreen" component={HomeScreen} />
           <Stack.Screen name="Conversation" component={Conversation} />
+          <Stack.Screen name="Message" component={Message} />
         </Stack.Navigator>
       </NavigationContainer>
     </SectionContext.Provider>

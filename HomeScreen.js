@@ -16,6 +16,7 @@ import { SectionContext } from "./Context";
 import Groups from "./Groups";
 import Status from "./Status";
 import Calls from "./Calls";
+import { Platform } from "react-native";
 
 const HomeScreen = () => {
   const { indexValue } = useContext(SectionContext);
@@ -29,7 +30,12 @@ const HomeScreen = () => {
     <Calls />,
   ];
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView
+      style={[
+        styles.container,
+        { paddingTop: Platform.OS == "android" ? 20 : 0 },
+      ]}
+    >
       <View style={styles.header}>
         <View style={styles.logoArea}>
           <View style={styles.logoWrap}>
@@ -75,8 +81,8 @@ const styles = StyleSheet.create({
   header: {
     paddingTop: 25,
     // paddingBottom: 25,
-    paddingRight: 20,
-    paddingLeft: 20,
+    paddingRight: 10,
+    paddingLeft: 10,
   },
   logoArea: {
     flexDirection: "row",
