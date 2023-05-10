@@ -14,8 +14,18 @@ const Message = (props) => {
           "pressed long";
         }}
       >
-        <View style={[styles.notch, { right: userid !== 1 ? 342 : 0 }]}></View>
-        <View style={[styles.message, { right: userid !== 1 ? 160 : 7 }]}>
+        <View
+          style={[
+            styles.notch,
+            {
+              right: userid !== 1 ? 5 : -330,
+              borderTopColor: userid !== 1 ? "rgb(31,44,52)"  : "rgb(0,93,75)",
+            },
+          ]}
+        ></View>
+        <View style={[styles.message, { right: userid !== 1 ? -7 : -120,
+        backgroundColor: userid !== 1 ? "rgb(31,44,52)"  : "rgb(0,93,75)",
+         }]}>
           <Text style={styles.text}>{message}</Text>
           <View style={styles.timeAndCheck}>
             <Text
@@ -38,12 +48,10 @@ const Message = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   wrapper: {
     flex: 1,
     position: "relative",
+    paddingHorizontal: 10,
   },
   notch: {
     // position: "absolute";
@@ -63,19 +71,22 @@ const styles = StyleSheet.create({
     borderRightColor: "transparent",
     borderTopColor: "rgb(0,93,75)",
     borderRadius: 10,
-    position: "absolute",
-    marginTop: 7,
+    position: "relative",
+    // marginTop: 7,
+    zIndex: 1,
   },
   message: {
     // left: 0,
+    zIndex: 2,
     maxWidth: 230,
     backgroundColor: "rgb(0,93,75)",
-    position: "absolute",
+    position: "relative",
     borderRadius: 10,
-    margin: 7,
+    // margin: 7,
     padding: 10,
     paddingBottom: 5,
     minHeight: 50,
+    bottom: 15,
   },
   text: {
     color: "#fafefc",
@@ -89,3 +100,15 @@ const styles = StyleSheet.create({
 });
 
 export default Message;
+// import { View, Text } from "react-native";
+// import React from "react";
+
+// const Message = () => {
+//   return (
+//     <View>
+//       <Text>Message</Text>
+//     </View>
+//   );
+// };
+
+// export default Message;

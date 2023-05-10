@@ -21,19 +21,21 @@ import {
   faMicrophone,
   faPaperclip,
   faPhone,
-  faSmile,
   faVideoCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigation } from "@react-navigation/native";
 import Message from "./Message";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { faPaperPlane, faSmile } from "@fortawesome/free-regular-svg-icons";
 
 const Conversation = ({ route, navigation }) => {
+  const flatListRef = useRef();
   const [isFocus, setIsFocus] = useState(false);
+  const [textBool, setTextBool] = useState(false);
   const [textInput, setTextInput] = useState("Message");
   const navigate = useNavigation();
   const { profileImg, username, message } = route.params;
-  const messages = [
+  const [messages, setMessages] = useState([
     {
       message: "Make the most outta today",
       id: 2,
@@ -58,7 +60,79 @@ const Conversation = ({ route, navigation }) => {
       time: "3:30",
       key: Math.random() * 12.3,
     },
-  ];
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Okay, Will do!",
+      id: 1,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Okay, Will do!",
+      id: 1,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 1,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Okay, Will do!",
+      id: 1,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+    {
+      message: "Make the most outta today",
+      id: 2,
+      time: "3:30",
+      key: Math.random() * 12.3,
+    },
+  ]);
 
   return (
     <SafeAreaView
@@ -116,31 +190,21 @@ const Conversation = ({ route, navigation }) => {
       </View>
       <View style={styles.body}>
         <Text style={styles.status}>Busy</Text>
-        <ScrollView>
-          {/* <Message message={message} userid={1} time="6:20" /> */}
-          <View>
-            <Message
-              message={messages[0].message}
-              time={messages[0].time}
-              userid={messages[0].id}
-            />
-
-            {/* <FlatList
-              style={{
-                flex: 12,
-                backgroundColor: "blue",
-              }}
-              data={messages}
-              renderItem={({ item }) => (
-                <Message
-                  message={item.message}
-                  time={item.time}
-                  userid={item.id}
-                />
-              )}
-              keyExtractor={(item) => item.key}
-            /> */}
-          </View>
+        <ScrollView style={{ marginBottom: 55 }}>
+          {/* <Message message={message} userid={2} time="6:20" /> */}
+          <FlatList
+            ref={flatListRef}
+            data={messages}
+            renderItem={({ item }) => (
+              // <Text>Message goes here</Text>
+              <Message
+                message={item.message}
+                time={item.time}
+                userid={item.id}
+              />
+            )}
+            keyExtractor={(item) => item.key}
+          />
         </ScrollView>
         <View
           style={[
@@ -153,7 +217,7 @@ const Conversation = ({ route, navigation }) => {
           <View style={styles.messageInput}>
             <FontAwesomeIcon
               icon={faSmile}
-              size={37}
+              size={32}
               style={{ color: "rgb(133,150,160)", marginRight: 10 }}
             />
             <TextInput
@@ -169,19 +233,33 @@ const Conversation = ({ route, navigation }) => {
               clearTextOnFocus={true}
               onChangeText={(textInput) => {
                 setTextInput(textInput);
+                setTextBool(textInput.length == 0 ? false : true);
               }}
               onFocus={() => {
                 setIsFocus(true);
                 setTextInput("");
+                flatListRef.current.scrollToEnd();
               }}
+              scrollToIndexFailed={() => scrollToIndexFailed()}
               onBlur={() => {
                 setIsFocus(false);
                 // setTextInput()
+                flatListRef.current.scrollToEnd();
               }}
               onSubmitEditing={() => {
                 setTextInput("Message");
+                flatListRef.current.scrollToEnd();
+                let oldMessages = messages;
+                let date = new Date();
+                oldMessages.push({
+                  message: textInput,
+                  time: `${date.getHours()}:${date.getMinutes()}`,
+                  id: 1,
+                  key: Math.random() * 12.3,
+                });
+                setMessages([...oldMessages]);
               }}
-            ></TextInput>
+            />
             <TouchableOpacity>
               <FontAwesomeIcon
                 icon={faLanguage}
@@ -216,7 +294,9 @@ const Conversation = ({ route, navigation }) => {
             }}
           >
             <FontAwesomeIcon
-              icon={faMicrophone}
+              icon={
+                (isFocus && textBool) === false ? faMicrophone : faPaperPlane
+              }
               size={30}
               style={{ color: "rgb(233,237,240)" }}
             />
