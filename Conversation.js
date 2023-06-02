@@ -133,6 +133,19 @@ const Conversation = ({ route, navigation }) => {
       key: Math.random() * 12.3,
     },
   ]);
+  const submitMessage = (textInput) => {
+    flatListRef.current.scrollToEnd();
+    let oldMessages = messages;
+    let date = new Date();
+    oldMessages.push({
+      message: textInput,
+      time: `${date.getHours()}:${date.getMinutes()}`,
+      id: 1,
+      key: Math.random() * 12.3,
+    });
+    setMessages([...oldMessages]);
+    setTextInput("Message");
+  };
 
   return (
     <SafeAreaView
@@ -190,22 +203,16 @@ const Conversation = ({ route, navigation }) => {
       </View>
       <View style={styles.body}>
         <Text style={styles.status}>Busy</Text>
-        <ScrollView style={{ marginBottom: 55 }}>
-          {/* <Message message={message} userid={2} time="6:20" /> */}
-          <FlatList
-            ref={flatListRef}
-            data={messages}
-            renderItem={({ item }) => (
-              // <Text>Message goes here</Text>
-              <Message
-                message={item.message}
-                time={item.time}
-                userid={item.id}
-              />
-            )}
-            keyExtractor={(item) => item.key}
-          />
-        </ScrollView>
+        <FlatList
+          style={{ marginBottom: 60 }}
+          ref={flatListRef}
+          data={messages}
+          renderItem={({ item }) => (
+            // <Text>Message goes here</Text>
+            <Message message={item.message} time={item.time} userid={item.id} />
+          )}
+          keyExtractor={(item) => item.key}
+        />
         <View
           style={[
             styles.messageArea,
@@ -221,14 +228,16 @@ const Conversation = ({ route, navigation }) => {
               style={{ color: "rgb(133,150,160)", marginRight: 10 }}
             />
             <TextInput
+              multiline
               editable
               value={textInput}
               style={{
-                color: "rgb(133,150,160)",
                 fontSize: 20,
                 flex: 1,
                 width: 50,
-                fontSize: isFocus == true ? 15 : 20,
+                fontSize: isFocus == true ? 19 : 20,
+                color: isFocus == true ? "#eaeceb" : "rgb(133,150,160)",
+                maxHeight: 90,
               }}
               clearTextOnFocus={true}
               onChangeText={(textInput) => {
@@ -243,22 +252,8 @@ const Conversation = ({ route, navigation }) => {
               scrollToIndexFailed={() => scrollToIndexFailed()}
               onBlur={() => {
                 setIsFocus(false);
-                // setTextInput()
-                flatListRef.current.scrollToEnd();
               }}
-              onSubmitEditing={() => {
-                setTextInput("Message");
-                flatListRef.current.scrollToEnd();
-                let oldMessages = messages;
-                let date = new Date();
-                oldMessages.push({
-                  message: textInput,
-                  time: `${date.getHours()}:${date.getMinutes()}`,
-                  id: 1,
-                  key: Math.random() * 12.3,
-                });
-                setMessages([...oldMessages]);
-              }}
+              onSubmitEditing={() => {}}
             />
             <TouchableOpacity>
               <FontAwesomeIcon
@@ -292,6 +287,7 @@ const Conversation = ({ route, navigation }) => {
               padding: 15,
               borderRadius: 50,
             }}
+            onPress={() => submitMessage(textInput)}
           >
             <FontAwesomeIcon
               icon={

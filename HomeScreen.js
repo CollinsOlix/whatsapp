@@ -1,4 +1,12 @@
-import { View, Text, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  PanResponder,
+  Platform,
+  Animated,
+  StyleSheet,
+} from "react-native";
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faWifi } from "@fortawesome/free-solid-svg-icons/faWifi";
@@ -16,12 +24,17 @@ import { SectionContext } from "./Context";
 import Groups from "./Groups";
 import Status from "./Status";
 import Calls from "./Calls";
-import { Platform } from "react-native";
+import { useAnimatedStyle } from "react-native-reanimated";
+import { useRef } from "react";
+
+let i = 0;
+let tel;
 
 const HomeScreen = () => {
   const { indexValue } = useContext(SectionContext);
   const [selectedItem, setSelectedItem] = indexValue;
-  console.log(selectedItem, " is Sselected");
+  // console.log(animatedBackground);
+
   const screens = [
     <Communities />,
     <Chats />,
@@ -66,8 +79,46 @@ const HomeScreen = () => {
 
         <Sections />
       </View>
-      <View style={styles.body}>
-        <SwipeComponent>{screens[selectedItem]}</SwipeComponent>
+      <View
+        style={styles.body}
+        onTouchStart={(event) => {
+          start = event.nativeEvent.pageX;
+          tel = event.nativeEvent.pageX;
+          console.log(event.nativeEvent.pageX);
+        }}
+        onTouchEnd={(event) => {
+          if (Math.sign(tel - event.nativeEvent.pageX) == 1) {
+            if (tel - event.nativeEvent.pageX < 100) return;
+            else {
+              console.log([tel, event.nativeEvent.pageX]);
+              i =
+                start > event.nativeEvent.locationX == true
+                  ? i < 4
+                    ? ++i
+                    : i
+                  : i > 0
+                  ? --i
+                  : i;
+              setSelectedItem(i);
+            }
+          } else if (Math.sign(tel - event.nativeEvent.pageX) == -1) {
+            if (tel - event.nativeEvent.pageX > -100) return;
+            else {
+              console.log([tel, event.nativeEvent.pageX]);
+              i =
+                start > event.nativeEvent.locationX == true
+                  ? i < 4
+                    ? ++i
+                    : i
+                  : i > 0
+                  ? --i
+                  : i;
+              setSelectedItem(i);
+            }
+          }
+        }}
+      >
+        {screens[selectedItem]}
       </View>
     </SafeAreaView>
   );

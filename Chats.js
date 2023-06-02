@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import Archived from "./Archived";
 import Contact from "./Contact";
@@ -62,16 +62,18 @@ const Chats = () => {
       <FlatList
         data={contacts}
         renderItem={({ item }) => (
-          <Contact
-            profileImg={item.profileImg}
-            message={item.message}
-            username={item.username}
-          />
+          <TouchableOpacity onPress={() => console.log("green")}>
+            <Contact
+              profileImg={item.profileImg}
+              message={item.message}
+              username={item.username}
+            />
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
       />
     </>
-  )
+  );
 };
 
 export default Chats;
